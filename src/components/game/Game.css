@@ -1,0 +1,4 @@
+.history-select {
+    user-select: none;
+    cursor: pointer;
+}
