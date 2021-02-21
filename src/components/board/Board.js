@@ -4,61 +4,17 @@ import './Board.css';
 import Square from '../square/Square.js';
 
 class Board extends React.Component {
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            squares: Array(9).fill(null),
-            isPlayerX: true,
-            winner: null,
-        };
-    }
-
-    handleClick(i) {
-        const squares = this.state.squares.slice();
-
-        if (this.winner || squares[i]) return;
-
-        squares[i] = this.state.isPlayerX ? '🗷' : '🗹';
-        this.setState({ squares: squares, isPlayerX: !this.state.isPlayerX });
-    }
-
     renderSquare(i) {
-        return <Square value={this.state.squares[i]} onClick={() => this.handleClick(i)} />;
-    }
-
-    calculateWinner() {
-        const lines = [
-            [0, 1, 2],
-            [3, 4, 5],
-            [6, 7, 8],
-            [0, 3, 6],
-            [1, 4, 7],
-            [2, 5, 8],
-            [0, 4, 8],
-            [2, 4, 6],
-        ];
-        for (let i = 0; i < lines.length; i++) {
-            const [a, b, c] = lines[i];
-            if (
-                this.state.squares[a] &&
-                this.state.squares[a] === this.state.squares[b] &&
-                this.state.squares[a] === this.state.squares[c]
-            ) {
-                return this.state.squares[a];
-            }
-        }
-        return null;
+        return <Square value={this.props.squares[i]} onClick={() => this.props.onClick(i)} />;
     }
 
     render() {
         let status;
 
-        this.winner = this.calculateWinner();
-        if (this.winner) {
-            status = 'Winner: ' + this.winner;
+        if (this.props.winner) {
+            status = 'Winner: ' + this.props.winner;
         } else {
-            status = `Current player: ${this.state.isPlayerX ? '🗷' : '🗹'}`;
+            status = `Current player: ${this.props.currentPlayer}`;
         }
 
         return (
