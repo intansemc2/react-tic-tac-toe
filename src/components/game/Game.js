@@ -14,6 +14,7 @@ class Game extends React.Component {
                     squares: Array(9).fill(null),
                     currentPlayer: '🗷',
                     winner: null,
+                    selectedAt: null,
                 },
             ],
 
@@ -30,7 +31,7 @@ class Game extends React.Component {
         const squares = showHistory.squares.slice();
 
         // Nếu đã kết thúc ván hoặc đã chọn ô thì bỏ qua
-        if (showHistory.winner || squares[i]) return;
+        if (showHistory.winner || squares[i] || squares[i] === 0) return;
 
         // Gán dữ liệu mới vào ô
         let currentPlayer = showHistory.currentPlayer;
@@ -48,6 +49,7 @@ class Game extends React.Component {
                     squares: squares,
                     currentPlayer: currentPlayer,
                     winner: winner,
+                    selectedAt: i,
                 },
             ]),
             showingHistoryIndex: showHistoryIndex + 1,
@@ -107,6 +109,7 @@ class Game extends React.Component {
                             squares={showHistory.squares}
                             currentPlayer={showHistory.currentPlayer}
                             winner={showHistory.winner}
+                            selectedAt={showHistory.selectedAt}
                             onClick={(i) => this.handleClick(i)}
                         />
                     </div>
@@ -114,7 +117,7 @@ class Game extends React.Component {
                     <div className="col-sm-12 col-md-6">
                         <div className="lead d-flex justify-content-between align-items-center">
                             <div>{status}</div>
-                            <i class="small">2 người chơi</i>
+                            <i className="small">2 người chơi</i>
                         </div>
                         <ol className="list-group">{moves}</ol>
                     </div>
